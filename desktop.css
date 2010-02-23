@@ -1,61 +1,18 @@
-body {
-    background-color: #ddd; /* Background color */
-    color: #222;            /* Foreground color used for text */
-    font-family: Helvetica; 
-    font-size: 14px;
-    margin: 0;              /* Amount of negative space around the outside of the body */
-    padding: 0;             /* Amount of negative space around the inside of the body */
-}
-
-#container {
-   width: 80ex;
-   margin: 0 auto;
-}
-
-h1 {
-    margin: 0 auto;
-    padding: 0;
-    color: #222;
-    background-color: #ccc;
-    border-bottom: 1px solid #666;
-    display: block;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px 0;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #fff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999));
-}
-
 textarea {
    font-size: 14px;
    font-family: Helvetica;
    width: 100%;
-   margin: 1ex 0 0 0;
-   overflow: auto;
-   height: auto;
+   height: 250px;
 }
 
-pre {
- white-space: pre-wrap;       /* css-3 */
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
+#instructions {
+   font-size: 12px;
+   list-style-position: inside;
+   margin-top: 1ex;
 }
 
-#input { display: block; }
+#result { word-wrap: break-word; }
+
+#input, #output { display: block; width: 95%; margin: 1ex auto;}
 #output { display: none; }
 #output textarea { background-color: #ddd; border: 0;}
-
-#attribution {
-   color: #aaa;
-   font-size: 10px;
-   text-align: center;
-}
-
-#attribution a { 
-   text-decoration: none;
-   color: #99c; 
-}
