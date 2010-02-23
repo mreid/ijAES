@@ -17,7 +17,7 @@
     <script type="text/javascript" src="utf8.js"></script>
 
     <script type="text/javascript">
-    $.jQTouch({
+    var jQT = new $.jQTouch({
         icon: 'apple-touch-icon.png',
         preloadImages: [
             'themes/jqt/img/chevron_white.png',
@@ -34,10 +34,6 @@
         return str.replace(/^\s+|\s+$/g,"");
     }
 
-    function autoselect(element){
-        element.select()
-    }
-
     // TextMate's default encryption/decryption uses AES128 but I haven't figured
     // out which text encoding yet as the results are garbled.
     var blocklength=256   
@@ -48,15 +44,19 @@
         var result="Passwords did not match!"
         if(retry == "") {
             result = AesCtr.decrypt(trim(text),password,blocklength)
-	        document.getElementById("plaintext").innerText = result
+            document.getElementById("plaintext").innerText = result
+            $('#plaintext').css('display', 'block')
+            $('#ciphertext').css('display','none')
         }
         else if(password == retry) {
             result = AesCtr.encrypt(text,password,blocklength)
-	        document.getElementById("ciphertext").value = result
+            document.getElementById("ciphertext").value = result
+            $('#ciphertext').css('display','block')
+            $('#plaintext').css('display', 'none')
         }
-        document.getElementById("input").style.display = "none"
-        document.getElementById("output").style.display = "block"
-    }    
+        
+        jQT.goTo('#result')
+    }
     </script>
 
     <style type="text/css" media="screen">
@@ -110,7 +110,7 @@
     
 		<div id="input">
     	<form>
-        	<textarea id="text" name="cipher" onChange="do_crypt(this.value)" onFocus="this.value=''">Enter cipher or plain text here...</textarea>
+        	<textarea id="text" class="active" name="cipher" onChange="do_crypt(this.value)" onFocus="this.value=''">Enter cipher or plain text here...</textarea>
     	</form>
 		<ol id="instructions">
 			<li>Paste in plain text to encrypt or AES encrypted text</li>
@@ -119,12 +119,19 @@
 			<li>Enter same again to encrypt or hit 
 				enter to decrypt</li>
 		</ol>
-		</div>
-		
-	    <div id="output">
-	        <pre id="plaintext"></pre>
-			<textarea id="ciphertext"></textarea>
 	    </div>
+	</div>
+
+	<div id="result">
+        <div class="toolbar">
+            <a class="back flip" href="#home">Back</a>
+            <h1>AES Output</h1>
+        </div>
+        
+        <div id="output">
+    	    <p id="plaintext" class="selectable"></p>
+    		<textarea id="ciphertext" class="selectable"></textarea>
+    	</div>
 	</div>
 </body>
 </html>
