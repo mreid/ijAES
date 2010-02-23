@@ -16,42 +16,45 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 
     <script type="text/javascript">
-    // TextMate's default encryption/decryption uses AES128 but I haven't figured
-    // out which text encoding yet as the results are garbled.
-    var blocklength=256
-    
-    function do_decrypt(ciphertext) {
-        var password=prompt("Enter password to decrypt","password")
-        result=AesCtr.decrypt(ciphertext,password,blocklength)
-        document.getElementById("cipher").style.display = "none"
-        document.getElementById("plain").style.display = "none"
-        document.getElementById("result").innerHTML = result
+    // Simple whitespace trimmer to handle newlines at end of ciphertext
+    function trim(str) {
+        return str.replace(/^\s+|\s+$/g,"");
     }
 
-    function do_encrypt(plaintext) {
-        var password=prompt("Enter password to encrypt","")
-        var retry=prompt("Renter password to verify","")
-        var result="Passwords did not match!"
-        if(password == retry) {
-            result=AesCtr.encrypt(plaintext,password,blocklength)
-        }
-        document.getElementById("cipher").style.display = "none"
-        document.getElementById("plain").style.display = "none"
-        document.getElementById("result").innerHTML = result        
+    function autoselect(element){
+        element.select()
     }
+
+    // TextMate's default encryption/decryption uses AES128 but I haven't figured
+    // out which text encoding yet as the results are garbled.
+    var blocklength=256   
+    function do_crypt(text) {
+        var password=prompt("Enter password","")
+        var retry=prompt("Renter password to encrypt or just hit return to decrypt","")
+        
+        var result="Passwords did not match!"
+        if(retry == "") {
+            result = AesCtr.decrypt(trim(text),password,blocklength)
+        }
+        else if(password == retry) {
+            result = AesCtr.encrypt(text,password,blocklength)
+        }
+        document.getElementById("text").style.display = "none"
+        document.getElementById("result").value = result
+        document.getElementById("output").style.display = "block"
+    }    
     </script>
 </head>
 <body>
 <div id="container">
-    <h1>ijAES</h1>
+    <h1>ijAES — An AES Tool</h1>
 
     <div id="input">
-        <textarea id="text" type="text" name="cipher" onChange="do_crypt(this.value)">Enter ciphertext here...</textarea>
-        <textarea id="plain" type="text" name="plain" onChange="do_encrypt(this.value)">Enter plaintext here...</textarea>
+        <textarea id="text" type="text" name="cipher" onChange="do_crypt(this.value)" onFocus="this.value=''">Enter cipher or plain text here...</textarea>
     </div>
 
-    <div id="output">
-        <pre id="result"></pre>
+    <div id="output" onClick="autoselect(this)">
+        <textarea id="result" onClick="autoselect(this)" readonly></textarea>
     </div>
     <div id="attribution">
         <p>A simple hack by <a href="http://mark.reid.name">Mark Reid</a> 
