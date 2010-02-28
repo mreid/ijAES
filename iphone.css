@@ -11,9 +11,8 @@ textarea {
    margin-top: 1ex;
 }
 
-#ciphertext { }
-#plaintext { word-wrap: break-word; }
+#ciphertext { display: none; }
+#plaintext { display: none; word-wrap: break-word; }
 
 #input, #output { display: block; width: 95%; margin: 1ex auto;}
-#output { display: none; }
 #output textarea { background-color: #ddd; border: 0;}
