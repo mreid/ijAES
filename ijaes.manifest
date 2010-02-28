@@ -3,6 +3,10 @@ index.html
 aes-ctr.js
 aes.js
 base64.js
-iphone.css
 utf8.js
+jqtouch/jquery.1.3.2.min.js
+jqtouch/jqtouch.min.js
+jqtouch/jqtouch.min.css
+themes/jqt/theme.min.css
+iphone.css
 apple-touch-icon.png
